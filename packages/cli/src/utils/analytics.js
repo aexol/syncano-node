@@ -63,6 +63,8 @@ const trackCommand = (options, additionalParams = {}) => {
   const cmd = _.find(options, (option) => option instanceof Command.Command)
   debug('trackCommand parent', cmd.parent._name) // eslint-disable-line
   const parent = cmd.parent._name === 'cli' ? null : cmd.parent._name.split('-').slice(-1)[0] // eslint-disable-line
+  // handle a case where cli is used with the s alias
+  const name = cmd.name().split(' ')[0] === 's' ? cmd.name().split(' ')[1] : cmd.name()
 
   const props = Object.assign({
     version: cmd.parent.version(),
@@ -71,9 +73,9 @@ const trackCommand = (options, additionalParams = {}) => {
     type: 'command'
   }, additionalParams)
 
-  let eventName = `CLI command: ${cmd.name()}`
+  let eventName = `CLI command: ${name}`
   if (parent) {
-    eventName = `CLI command: ${parent} ${cmd.name()}`
+    eventName = `CLI command: ${parent} ${name}`
   }
 
   track(eventName, props)
