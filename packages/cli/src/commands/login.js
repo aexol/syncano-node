@@ -59,10 +59,10 @@ export default class Login {
   }
 
   async loginCallback (resp, loginType) {
-    const { account_key, ...user_details } = resp
+    const { account_key, ...userDetails } = resp
     this.session.settings.account.set('auth_key', account_key)
-    this.session.settings.account.set('user', user_details)
-    this.userId = user_details.id
+    this.session.settings.account.set('user', userDetails)
+    this.userId = userDetails.id
     await this.session.load()
 
     if (loginType === 'signup') {
