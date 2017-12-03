@@ -13,28 +13,7 @@ const STG_KEY = 'CCupheBjgV6WI0emy3oRUnDyjQ8ngmgB'
 const PROD_KEY = 'fLDtpYXRjFYnHlp1gvzl4I3Gv8gDoQ8m'
 
 const ANALYTICS_WRITE_KEY = process.env.SYNCANO_ENV === 'test' ? STG_KEY : PROD_KEY
-const analytics = new Analytics(ANALYTICS_WRITE_KEY, {
-  flushAt: 5,
-  flushAfter: 300
-})
-
-const identify = (details) => {
-  debug('identify')
-  analytics.identify({
-    userId: details.id,
-    traits: {
-      'First name': details.first_name,
-      'Last name': details.last_name,
-      source: 'Sign up',
-      email: details.email,
-      is_active: details.is_active
-    }
-  })
-  analytics.alias({
-    previousId: details.email,
-    userId: details.id
-  })
-}
+const analytics = new Analytics(ANALYTICS_WRITE_KEY, { flushAt: 5 })
 
 const track = (eventName, params = {}) => {
   debug('track')
@@ -80,7 +59,6 @@ const trackCommand = (options, additionalParams = {}) => {
 }
 
 export default {
-  identify,
   track,
   trackCommand
 }

@@ -66,7 +66,8 @@ Raven.context(() => {
         .group('Basics')
         .description('Login to your account')
         .action((...options) => {
-          trackAndDebug(options)
+          // track command is handled in loginCallback function in login.js
+          commandDebug(options)
           new commands.Login(context).run(options)
         })
 

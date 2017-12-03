@@ -14,7 +14,6 @@ import Socket from './sockets'
 import Init from './init'
 import Hosting from './hosting'
 import Plugins from './plugins'
-import { identify } from './analytics'
 import { echo, echon, error } from './print-tools'
 
 const { debug } = logger('utils-session')
@@ -93,8 +92,9 @@ export class Session {
     try {
       const details = this.settings.account.getUserDetails()
       this.userId = details.id
-      identify(details)
-    } catch (err) {}
+    } catch (err) {
+      debug('createConnection', `User not logged in ${err}`)
+    }
   }
 
   async createInstance (name = genUniqueName()) {

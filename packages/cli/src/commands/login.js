@@ -62,12 +62,13 @@ export default class Login {
     const { account_key, ...user_details } = resp
     this.session.settings.account.set('auth_key', account_key)
     this.session.settings.account.set('user', user_details)
+    this.userId = user_details.id
     await this.session.load()
 
     if (loginType === 'signup') {
-      track('CLI: Sign up')
+      track('CLI command: Sign up')
     } else {
-      track('CLI: Sign in')
+      track('CLI command: login')
     }
     echo()
     echo(4)(`${format.green('You\'re in! Enjoy!')} 👍`)
