@@ -15,6 +15,7 @@ export default class AccountSettings extends Settings {
   logout () {
     debug('logout()')
     delete this.attributes.auth_key
+    delete this.attributes.user
     this.save()
   }
 
@@ -24,6 +25,10 @@ export default class AccountSettings extends Settings {
 
   getAuthKey () {
     return process.env.SYNCANO_AUTH_KEY || this.attributes.auth_key || null
+  }
+
+  getUserDetails () {
+    return this.attributes.user || null
   }
 
   addProject (projectName, params = {}) {

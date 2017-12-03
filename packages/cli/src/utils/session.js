@@ -91,7 +91,7 @@ export class Session {
     }
 
     try {
-      const details = await this.connection.Account.getUserDetails()
+      const details = this.settings.account.getUserDetails()
       this.userId = details.id
       identify(details)
     } catch (err) {}
